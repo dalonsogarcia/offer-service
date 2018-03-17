@@ -1,4 +1,4 @@
-# Offers Service #
+# Offers Service
 
 The offers service is a RESTful web application that allows merchants to create and manage product and/or services offers, specifically, it implements the following functionality:
 * Creation of offers
@@ -7,7 +7,7 @@ The offers service is a RESTful web application that allows merchants to create 
 * Cancel offers
 * Automatic expiration of offers
 
-## Offer overview ##
+## Offer overview
 
 | Field           | Description                                                | Type             | Accepted values              |
 |-----------------|:-----------------------------------------------------------|:-----------------|:-----------------------------|
@@ -18,36 +18,79 @@ The offers service is a RESTful web application that allows merchants to create 
 | status          | Possible status of the offer                               | OfferStatus      | ACTIVE, CANCELLED or EXPIRED | 
 | price           | Price currency                                             | MerchantCurrency | GBP, USD or EUR              |   
 
-## Available operations ##
+## Available operations
 
 The operations are implemented as standard HTTP requests and will return standard HTTP status codes, it is recommended to use a REST client like Insomnia or Postman to interact with the system.
 
-### Retrieve existing offers ###
+### Retrieve existing offers
 
+#### Example request
 
-### Create new offer ###
+```
+    curl --request GET \
+      --url http://localhost:40200/offers/ \
+      --header 'content-type: application/json' \
+      --data '{
+        "description":"Updated description",
+        "expirationDate":"2018-04-17T16:28:12.507",
+        "price":19.99,
+        "status":"ACTIVE",
+        "currency":"GBP"
+        }'
+```
+
+#### Example response
+
+```
+    HTTP/1.1 200 
+    Content-Type: application/json;charset=UTF-8
+    
+    [
+        {
+            "id":1,
+            "description":"Updated description",
+            "expirationDate":"2018-04-17T16:28:12.507",
+            "price":19.99,
+            "status":"ACTIVE",
+            "currency":"GBP"
+        }
+    ]
+```
+
+### Create new offer
+
+#### Example request
 
 ```
 curl --request POST \
      --url http://localhost:40200/offers \
      --header 'content-type: application/json' \
      --data '{
-        "description":"A description",
+        "description":"One offer",
         "expirationDate":"2018-04-17T16:28:12.507",
         "price":19.99,
         "status":"ACTIVE",
-        "currency":"GNB"
+        "currency":"GBP"
        }'
    ```
 
-### Update offer ###
+### Example response
+```
+    HTTP/1.1 201 
+    Location: /offers/1
+    Content-Length: 0
+```
+
+### Update offer
+
+#### Example request
 
 ```
-curl --request POST \
+curl --request PUT \
      --url http://localhost:40200/offers/1 \
      --header 'content-type: application/json' \
      --data '{
-        "description":"A description",
+        "description":"Updated description",
         "expirationDate":"2018-04-17T16:28:12.507",
         "price":19.99,
         "status":"ACTIVE",
@@ -55,7 +98,41 @@ curl --request POST \
        }'
    ```
 
+#### Example response
+```
+    HTTP/1.1 200 
+    Content-Type: application/json;charset=UTF-8
+    
+    { 
+        "id":1, 
+        "description":"Updated description",
+        "expirationDate":"2018-04-17T16:28:12.507",
+        "price":19.99,
+        "status":"ACTIVE",
+        "currency":"GBP"
+    }
+```
+
 ### Cancel offer ###
+
+#### Example request
+
+```
+    curl --request DELETE \
+      --url http://localhost:40200/offers/1/cancel \
+      --header 'content-type: application/json'
+```
+
+#### Example response
+
+```
+    HTTP/1.1 200 
+    Content-Type: text/plain;charset=UTF-8
+    
+    { 
+        "message" : "Offer cancelled"
+    }
+```
 
 ### Note about identifiers 
 On a production database using auto incremented sequential identifiers should be discouraged, we have used sequential generation of identifiers for ease of testing. 

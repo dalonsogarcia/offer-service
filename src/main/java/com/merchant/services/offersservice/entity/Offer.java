@@ -30,17 +30,29 @@ public class Offer {
     @Enumerated(EnumType.STRING)
     private OfferStatus status = OfferStatus.ACTIVE;
 
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private MerchantCurrency currency = MerchantCurrency.GBP;
+
     public Offer(final String description, final LocalDateTime expirationDate, final double price) {
         this.description = description;
         this.expirationDate = expirationDate;
         this.price = price;
     }
 
-    public Offer(final String description, final LocalDateTime expirationDate, final double price, final OfferStatus statusf) {
+    public Offer(final String description, final LocalDateTime expirationDate, final double price, final OfferStatus status) {
         this.description = description;
         this.expirationDate = expirationDate;
         this.price = price;
         this.status = status;
+    }
+
+    public Offer(final String description, final LocalDateTime expirationDate, final double price, final OfferStatus status, final MerchantCurrency currency) {
+        this.description = description;
+        this.expirationDate = expirationDate;
+        this.price = price;
+        this.status = status;
+        this.currency = currency;
     }
 
     public Offer() {
@@ -84,5 +96,13 @@ public class Offer {
 
     public void setStatus(OfferStatus status) {
         this.status = status;
+    }
+
+    public MerchantCurrency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(MerchantCurrency currency) {
+        this.currency = currency;
     }
 }

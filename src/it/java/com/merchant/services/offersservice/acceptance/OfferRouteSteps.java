@@ -2,7 +2,6 @@ package com.merchant.services.offersservice.acceptance;
 
 import com.merchant.services.offersservice.TestApplication;
 import com.merchant.services.offersservice.entity.Offer;
-import com.merchant.services.offersservice.entity.OfferStatus;
 import com.merchant.services.offersservice.repository.OfferRepository;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -19,7 +18,6 @@ import org.springframework.test.context.ContextConfiguration;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.Optional;
 import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
@@ -73,15 +71,16 @@ public class OfferRouteSteps {
         return ((randomNumberGenerator.nextInt(20 -1) + 1) * basePrice) - 0.01;
     }
 
-    @When("^a (.+) request is made to (.+) with offer description: (.+), expiration date: (.+), price: (.+) and status: (.+)$")
+    @When("^a (.+) request is made to (.+) with offer description: (.+), expiration date: (.+), price: (.+), status: (.+) and currency: (.+)$")
     public void aHttpMethodRequestIsMadeToOfferControllerPath(final HttpMethod httpMethod, final String offerControllerPath,
-                                                              final String description, final String expirationDate, final double price,
-                                                              final String offerStatusString) throws Throwable {
+                                                              final String description, final String expirationDate, final String price,
+                                                              final String offerStatusString, final String currency) {
         final String url = String.format("http://localhost:%s/offers/%s", serverPort, offerControllerPath);
 
         final HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE);
 
+        final String requestString = getRequestString(description, expirationDate, price, offerStatusString, currency);
         switch (httpMethod){
             case GET:
                 // Distinguish between a request to the root collection and an individual resource
@@ -96,12 +95,12 @@ public class OfferRouteSteps {
                 }
                 break;
             case POST:
-                postResponseEntity = restTemplate.exchange(url, httpMethod, new HttpEntity<>(getRequestString(description, expirationDate, price, offerStatusString), headers), String.class);
+                postResponseEntity = restTemplate.exchange(url, httpMethod, new HttpEntity<>(requestString, headers), String.class);
                 collectionResponseEntity = null;
                 offerResponseEntity = null;
                 break;
             case PUT:
-                final HttpEntity<String> requestEntity = new HttpEntity<>(getRequestString(description, expirationDate, price, offerStatusString), headers);
+                final HttpEntity<String> requestEntity = new HttpEntity<>(requestString, headers);
                 postResponseEntity = restTemplate.exchange(url, httpMethod, requestEntity, String.class);
                 offerResponseEntity = null;
                 collectionResponseEntity = null;
@@ -113,13 +112,19 @@ public class OfferRouteSteps {
         }
     }
 
-    private String getRequestString(final String description, final String expirationDate, final double price, final String offerStatusString) {
+    private String getRequestString(final String description, final String expirationDate, final String price,
+                                    final String offerStatusString, final String currency) {
         return String.format("{\n" +
                 "\"description\":\"%s\",\n" +
                 "\"expirationDate\":\"%s\",\n" +
                 "\"price\":%s,\n" +
-                "\"status\":\"%s\"" +
-                "\n}", description.equalsIgnoreCase("na") ? "" : description, expirationDate, price, offerStatusString);
+                "\"status\":\"%s\",\n" +
+                "\"currency\":\"%s\"" +
+                "\n}", description.equalsIgnoreCase("na") ? "" : description,
+                expirationDate.equalsIgnoreCase("na") ? "" : expirationDate,
+                price.equalsIgnoreCase("na") ? "" : price,
+                offerStatusString.equalsIgnoreCase("na") ? "" : offerStatusString,
+                currency.equalsIgnoreCase("na") ? "" : currency);
     }
 
     @Then("^the service should reply with status code (.+)$")

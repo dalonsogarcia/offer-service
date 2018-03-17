@@ -1,1 +1,0 @@
-create table offer (id varchar(255) not null, description varchar(255) not null, expiration_date binary(255) not null, price double not null check (price>=0), status varchar(255) not null, primary key (id))

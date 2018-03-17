@@ -10,6 +10,9 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
+/**
+ * Validator for {@link Offer} objects
+ */
 public class OfferValidator implements ConstraintValidator<ValidOffer, Offer> {
 
     @Override

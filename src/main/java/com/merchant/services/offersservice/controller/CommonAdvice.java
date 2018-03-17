@@ -15,6 +15,9 @@ import javax.validation.ConstraintViolationException;
 import static java.lang.String.format;
 import static java.util.Optional.ofNullable;
 
+/**
+ * Common exception handler for the controllers, defines status codes and response bodies for the different exceptions
+ */
 @ControllerAdvice
 public class CommonAdvice {
 

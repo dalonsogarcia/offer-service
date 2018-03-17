@@ -10,6 +10,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
+/**
+ * This controller handles all the offers endpoints
+ */
 @RestController
 @Validated
 @RequestMapping("/offers")

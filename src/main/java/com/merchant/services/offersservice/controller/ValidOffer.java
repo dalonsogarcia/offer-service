@@ -4,6 +4,9 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;
 
+/**
+ * Denotes that a {@link com.merchant.services.offersservice.entity.Offer} should be validated by {@link OfferValidator}
+ */
 @Constraint(validatedBy = OfferValidator.class)
 @Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)

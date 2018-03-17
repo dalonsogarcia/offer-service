@@ -7,6 +7,9 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
+/**
+ * Definition of an Offer object, the fields will be used to map to the database table columns
+ */
 @Entity
 public class Offer {
 

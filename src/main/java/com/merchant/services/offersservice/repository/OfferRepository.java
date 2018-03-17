@@ -9,6 +9,9 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 
+/**
+ * {@link Offer} Repository to interact with the Offers table, defines custom queries.
+ */
 @Repository
 public interface OfferRepository extends CrudRepository<Offer, Long> {
 

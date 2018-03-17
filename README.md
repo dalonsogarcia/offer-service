@@ -66,6 +66,8 @@ Queries the service for all the existing offers.
 
 ### Create new offer
 
+Send a request to insert a new offer in the database.
+
 #### Example request
 
 ```
@@ -89,6 +91,8 @@ curl --request POST \
 ```
 
 ### Retrieve existing offer (single)
+
+Query a single offer by its ID
 
 #### Example request
 
@@ -115,6 +119,8 @@ curl --request POST \
 ```
 
 ### Update offer
+
+Update an existing offer, requires the offer ID
 
 #### Example request
 
@@ -148,6 +154,8 @@ curl --request PUT \
 
 ### Cancel offer ###
 
+Set the status of an existing offer (must provide id) to CANCELLED, note that this **does not delete the offer**.
+
 #### Example request
 
 ```
@@ -170,11 +178,15 @@ curl --request PUT \
 ### Error responses
 
 **Status code**|**Explanation**
-:-----:|:-----:
+-----|:-----
 400|The offer being created/updated is invalid. I.e invalid status or empty description
 404|The specified offer id can’t be found in the database
-405|"Operation not allowed
+405|Operation not allowed
 500|Server error
+
+### Auto expiration of offers
+
+The service performs a check every second and automatically sets the status to EXPIRED on those offers whose expiration date has passed, cancelled offers are also expired automatically.
 
 ### Note about identifiers 
 On a production database using auto incremented sequential identifiers should be discouraged, we have used sequential generation of identifiers for ease of testing. 

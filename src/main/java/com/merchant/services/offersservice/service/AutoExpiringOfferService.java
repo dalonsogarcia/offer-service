@@ -15,6 +15,10 @@ import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Implementation of a {@link OfferService} that uses an {@link OfferRepository} and performs automatic expiration of
+ * {@link Offer} objects
+ */
 @Service
 public class AutoExpiringOfferService implements OfferService {
 

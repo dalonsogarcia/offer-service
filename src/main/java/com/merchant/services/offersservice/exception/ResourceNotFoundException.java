@@ -1,5 +1,6 @@
 package com.merchant.services.offersservice.exception;
 
+
 public class ResourceNotFoundException extends RuntimeException {
 
     public ResourceNotFoundException(final String message) {

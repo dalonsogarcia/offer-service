@@ -4,6 +4,9 @@ import com.merchant.services.offersservice.entity.Offer;
 
 import java.util.List;
 
+/**
+ * Definition of a service to manage {@link Offer} objects
+ */
 public interface OfferService {
 
     List<Offer> getAllOffers();

@@ -182,6 +182,7 @@ Set the status of an existing offer (must provide id) to CANCELLED, note that th
 400|The offer being created/updated is invalid. I.e invalid status or empty description
 404|The specified offer id can’t be found in the database
 405|Operation not allowed
+415|Unsupported media type. Remember to set the Content-Type header to application/json
 500|Server error
 
 ### Auto expiration of offers
